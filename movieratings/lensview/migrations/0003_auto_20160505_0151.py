@@ -9,7 +9,7 @@ import csv
 def load_user_data(apps, schema_editor):
     Rater = apps.get_model('lensview', 'Rater')
 
-    with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/users.dat') as f:
+    with open('../../../ml-1m/users.dat') as f:
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
         fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split('::'),
         delimiter='\t'

@@ -8,7 +8,7 @@ import csv
 def load_movie_data(apps, schema_editor):
     Movie = apps.get_model('lensview', 'Movie')
 
-    with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/movies.dat', encoding='windows-1252') as f:
+    with open('../../../ml-1m/movies.dat', encoding='windows-1252') as f:
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
         fieldnames='MovieID::Title::Genres'.split('::'),
         delimiter='\t'

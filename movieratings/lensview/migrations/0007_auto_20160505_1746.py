@@ -10,7 +10,7 @@ def load_rating_data(apps, schema_editor):
     Rater = apps.get_model('lensview', 'Rater')
     Rating = apps.get_model('lensview', 'Rating')
 
-    with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/ratings.dat') as f:
+    with open('../../../ml-1m/ratings.dat') as f:
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
         fieldnames='UserID::MovieID::Rating::Timestamp'.split('::'),
         delimiter='\t'
