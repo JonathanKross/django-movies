@@ -5,6 +5,35 @@ from django.db import migrations
 import csv
 
 
+def load_user_data(apps, schema_editor):
+    Rater = apps.get_model('lensview', 'Rater')
+
+    with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/users.dat') as f:
+        reader = csv.DictReader([line.replace('::', '\t') for line in f],
+        fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split('::'),
+        delimiter='\t'
+        )
+
+    for row in reader:
+        r = Rater(id=row['UserID'], gender=row['Gender'], age=row['Age'],
+            occupation=row['Occupation'], zipcode=row['Zip-code'])
+        r.save()
+
+
+def load_movie_data(apps, schema_editor):
+    Movie = apps.get_model('lensview', 'Movie')
+
+    with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/movies.dat', encoding='windows-1252') as f:
+        reader = csv.DictReader([line.replace('::', '\t') for line in f],
+        fieldnames='MovieID::Title::Genres'.split('::'),
+        delimiter='\t'
+        )
+
+    for row in reader:
+        m = Movie(id=row['MovieID'], title=row['Title'], genre=row['Genres'])
+        m.save()
+
+
 def load_rating_data(apps, schema_editor):
     Movie = apps.get_model('lensview', 'Movie')
     Rater = apps.get_model('lensview', 'Rater')
@@ -30,5 +59,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(load_rating_data)
+        migrations.RunPython(load_user_data, load_movie_data, load_rating_data)
     ]

@@ -61,10 +61,10 @@ class Rater(models.Model):
                         (20, "Writer")
                         )
 
-    age = models.IntegerField()
+    age = models.IntegerField(choices=AGE_CHOICES)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     occupation = models.CharField(max_length=50, choices=OCCUPATION_CHOICES)
-    zipcode = models.CharField(max_length=10, choices=AGE_CHOICES)
+    zipcode = models.CharField(max_length=10)
 
 
     def __str__(self):
@@ -104,7 +104,7 @@ class Rating(models.Model):
             )
 
         for row in reader:
-            r = Rating(rater_id=Rater.objects.get(id=row['UserID']),
-                        movie_id=Movie.objects.get(id=row['MovieID']),
+            r = Rating(rater=Rater.objects.get(id=row['UserID']),
+                        movie=Movie.objects.get(id=row['MovieID']),
                         stars=row['Rating'])
             r.save()
