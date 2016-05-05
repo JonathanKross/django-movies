@@ -86,8 +86,8 @@ class Rater(models.Model):
 
 
 class Rating(models.Model):
-    rater = models.ForeignKey(Rater)
-    movie = models.ForeignKey(Movie)
+    rater = models.ForeignKey('Rater')
+    movie = models.ForeignKey('Movie')
     stars = models.IntegerField()
 
     def __str__(self):
@@ -104,5 +104,7 @@ class Rating(models.Model):
             )
 
         for row in reader:
-            r = Rating(rater=row['UserID'], movie=row['MovieID'], stars=row['Rating'])
+            r = Rating(rater_id=Rater.objects.get(id=row['UserID']),
+                        movie_id=Movie.objects.get(id=row['MovieID']),
+                        stars=row['Rating'])
             r.save()
