@@ -10,6 +10,19 @@ class Movie(models.Model):
         return self.title
 
 
+    def load_movie_data():
+
+        with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/movies.dat', encoding='windows-1252') as f:
+            reader = csv.DictReader([line.replace('::', '\t') for line in f],
+            fieldnames='MovieID::Title::Genres'.split('::'),
+            delimiter='\t'
+            )
+
+        for row in reader:
+            m = Movie(title=row['Title'], genre=row['Genres'])
+            m.save()
+
+
 class Rater(models.Model):
 
     GENDER_CHOICES = (('M', 'Male'),
@@ -80,3 +93,17 @@ class Rating(models.Model):
     def __str__(self):
         return 'Rating(id={}, rater={}, stars={}, movie={})'.format(
             self.id, self.rater, self.stars, self.movie)
+
+
+    def load_rating_data():
+
+        with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/users.dat') as f:
+            reader = csv.DictReader([line.replace('::', '\t') for line in f],
+            fieldnames='UserID::MovieID::Rating::Timestamp'.split('::'),
+            delimiter='\t'
+            )
+
+        for row in reader:
+            r = Rater(gender=row['Gender'], age=row['Age'],
+                occupation=row['Occupation'], zipcode=row['Zip-code'])
+            r.save()
