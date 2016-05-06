@@ -1,6 +1,5 @@
 from django.db import models
-import csv
-
+from django.db.models import Avg
 
 class Movie(models.Model):
     title = models.CharField(max_length=200)
@@ -10,17 +9,17 @@ class Movie(models.Model):
         return self.title
 
 
-    def load_movie_data():
-
-        with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/movies.dat', encoding='windows-1252') as f:
-            reader = csv.DictReader([line.replace('::', '\t') for line in f],
-            fieldnames='MovieID::Title::Genres'.split('::'),
-            delimiter='\t'
-            )
-
-        for row in reader:
-            m = Movie(title=row['Title'], genre=row['Genres'])
-            m.save()
+    # def load_movie_data():
+    #
+    #     with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/movies.dat', encoding='windows-1252') as f:
+    #         reader = csv.DictReader([line.replace('::', '\t') for line in f],
+    #         fieldnames='MovieID::Title::Genres'.split('::'),
+    #         delimiter='\t'
+    #         )
+    #
+    #     for row in reader:
+    #         m = Movie(title=row['Title'], genre=row['Genres'])
+    #         m.save()
 
 
 class Rater(models.Model):
@@ -71,18 +70,18 @@ class Rater(models.Model):
         return str(self.id)
 
 
-    def load_user_data():
-
-        with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/users.dat') as f:
-            reader = csv.DictReader([line.replace('::', '\t') for line in f],
-            fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split('::'),
-            delimiter='\t'
-            )
-
-        for row in reader:
-            r = Rater(gender=row['Gender'], age=row['Age'],
-                occupation=row['Occupation'], zipcode=row['Zip-code'])
-            r.save()
+    # def load_user_data():
+    #
+    #     with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/users.dat') as f:
+    #         reader = csv.DictReader([line.replace('::', '\t') for line in f],
+    #         fieldnames='UserID::Gender::Age::Occupation::Zip-code'.split('::'),
+    #         delimiter='\t'
+    #         )
+    #
+    #     for row in reader:
+    #         r = Rater(gender=row['Gender'], age=row['Age'],
+    #             occupation=row['Occupation'], zipcode=row['Zip-code'])
+    #         r.save()
 
 
 class Rating(models.Model):
@@ -95,16 +94,25 @@ class Rating(models.Model):
             self.id, self.rater, self.stars, self.movie)
 
 
-    def load_rating_data():
+    # def load_rating_data():
+    #
+    #     with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/ratings.dat') as f:
+    #         reader = csv.DictReader([line.replace('::', '\t') for line in f],
+    #         fieldnames='UserID::MovieID::Rating::Timestamp'.split('::'),
+    #         delimiter='\t'
+    #         )
+    #
+    #     for row in reader:
+    #         r = Rating(rater=Rater.objects.get(id=row['UserID']),
+    #                     movie=Movie.objects.get(id=row['MovieID']),
+    #                     stars=row['Rating'])
+    #         r.save()
 
-        with open('/Users/JonathanKross/tiy/assignments/django-movies/ml-1m/ratings.dat') as f:
-            reader = csv.DictReader([line.replace('::', '\t') for line in f],
-            fieldnames='UserID::MovieID::Rating::Timestamp'.split('::'),
-            delimiter='\t'
-            )
+## TODO: This isn't working yet, but I think I'm heading in the right direction
 
-        for row in reader:
-            r = Rating(rater=Rater.objects.get(id=row['UserID']),
-                        movie=Movie.objects.get(id=row['MovieID']),
-                        stars=row['Rating'])
-            r.save()
+def get_average_rating():
+    ratings = Rating.objects.all()
+    for movie_id in ratings:
+        avg_ratings = []
+        avg_ratings.append(Rating.objects.filter(movie_id).aggregate(Avg('stars')))
+    return avg_ratings
