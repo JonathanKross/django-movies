@@ -1,9 +1,28 @@
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Sum
 
 class Movie(models.Model):
     title = models.CharField(max_length=200)
     genre = models.CharField(max_length=200)
+    number_ratings = models.IntegerField(default=-1)
+    rating_sum = models.IntegerField(default=-1)
+    average_rating = models.FloatField()
+
+
+# def populate_sum_column(apps, schema_editor):
+#     movies = Movie.objects.all()
+#     for movie in movies:
+#         if movie.number_ratings == 0:
+#             movie.rating_sum = 0
+#             movie.save()
+#         else:
+#             avg_ratings = movie.rating_set.all().aggregate(Avg('stars'))
+#             movie.average_rating = avg_ratings['stars__avg']
+#             movie.save()
+
+
+
+
 
     def __str__(self):
         return self.title
@@ -21,6 +40,15 @@ class Movie(models.Model):
     #         m = Movie(title=row['Title'], genre=row['Genres'])
     #         m.save()
 
+    # @staticmethod
+    # def get_average_rating(minimum_ratings=300):
+    #     movies = Movie.objects.all()
+    #     average_ratings = []
+    #     for movie in movies:
+    #         ratings = movie.rating_set.all()
+    #         if len(ratings) >= minimum_ratings:
+    #             average_ratings.append((movie.title, ratings.aggregate(Avg('stars'))))
+    #     return average_ratings, len(average_ratings)
 
 class Rater(models.Model):
 
@@ -107,12 +135,3 @@ class Rating(models.Model):
     #                     movie=Movie.objects.get(id=row['MovieID']),
     #                     stars=row['Rating'])
     #         r.save()
-
-## TODO: This isn't working yet, but I think I'm heading in the right direction
-
-def get_average_rating():
-    ratings = Rating.objects.all()
-    for movie_id in ratings:
-        avg_ratings = []
-        avg_ratings.append(Rating.objects.filter(movie_id).aggregate(Avg('stars')))
-    return avg_ratings
