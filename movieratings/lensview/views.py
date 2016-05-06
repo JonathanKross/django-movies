@@ -11,5 +11,6 @@ def detail(request, movie_id):
     return HttpResponse("You're looking at movie %s." % movie_id)
 
 def top_movies(request):
-    avg, avg_length = Movie.get_average_rating()
-    return HttpResponse("This is a list of the top rated movies {}".format(avg_length))
+    significantly_rated = Movie.objects.filter(number_ratings__gte=300)
+    top_twenty = significantly_rated.order_by('average_rating').reverse()[:20]
+    return render(request, 'lensview/top_movies.html', {'top_twenty': top_twenty})

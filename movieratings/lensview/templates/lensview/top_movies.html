@@ -1,0 +1,10 @@
+{% if top_twenty %}
+  <h1>20 Top Rated Movies</h1>
+    <ol>
+      {% for movie in top_twenty %}
+       <li><a href="/lensview/{{movie.title}}/">{{movie.title}}></a>{{movie.average_rating}}</li>
+      {% endfor %}
+    </ol>
+    {% else %}
+      <p>No top movies to display</p>
+{% endif %}
