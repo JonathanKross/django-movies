@@ -1,5 +1,8 @@
 from django.db import models
 from django.db.models import Avg, Sum
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
 
 
 class Movie(models.Model):
@@ -54,8 +57,9 @@ class Rater(models.Model):
 
     age = models.IntegerField(choices=AGE_CHOICES)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    occupation = models.CharField(max_length=50, choices=OCCUPATION_CHOICES)
+    occupation = models.IntegerField(choices=OCCUPATION_CHOICES)
     zipcode = models.CharField(max_length=10)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
 
     def __str__(self):
