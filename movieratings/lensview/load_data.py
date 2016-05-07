@@ -63,3 +63,12 @@ def load_rating_data():
                     movie=Movie.objects.get(id=row['MovieID']),
                     stars=row['Rating'])
         r.save()
+
+
+def create_rater_users():
+    raters = Rater.objects.all()
+    for rater in raters:
+        username = 'rater' + str(rater.id)
+        email = 'rater' + str(rater.id) + '@raters.com'
+        password = 'rater' + str(rater.id) + 'password'
+        user = User.objects.create_user(username, email, password)
