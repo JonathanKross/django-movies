@@ -2,7 +2,7 @@
   <h1>20 Top Rated Movies</h1>
     <ol>
       {% for movie in top_twenty %}
-       <li><a href="/lensview/{{movie.title}}/">{{movie.title}}</a></li>
+       <li><a href="{% url 'movie_detail' movie.pk %}">{{movie.title}}</a></li>
        Average Rating: {{movie.average_rating | floatformat:"2"}}
        <p></p>
       {% endfor %}

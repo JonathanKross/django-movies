@@ -1,9 +1,14 @@
 
 {% block content %}
   <h2>Rater #{{ rater.id }}</h2>
+  <p>
+    Age: {{rater.age}}<br>
+    Gender: {{rater.gender}}<br>
+    Occupation: {{rater.occupation}}<br>
+  </p>
     {% for rating in ratings %}
     <p>
-      {{ rating.stars }} <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
+      Stars: {{ rating.stars }}, <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
     </p>
   {% endfor %}
 {% endblock %}
