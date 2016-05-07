@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Movie, Rater, Rating
-
+from .forms import UserForm
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the movies index.")
+    return render(request, "lensview/index.html")
 
 
 def detail(request, movie_id):
@@ -27,3 +27,20 @@ def show_rater(request, rater_id):
     rater = Rater.objects.get(pk=rater_id)
     ratings = rater.rating_set.all()
     return render(request, 'lensview/rater.html', {'rater': rater, 'ratings': ratings})
+
+def register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            registered = True
+        else:
+            print (user_form.errors)
+    else:
+        user_form = UserForm()
+    return render(request,
+            'registration/register.html',
+            {'user_form': user_form, 'registered': registered} )
