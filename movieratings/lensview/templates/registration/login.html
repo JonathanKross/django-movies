@@ -1,30 +1,21 @@
-{% extends "registration/registration_base.html" %}
-{% load i18n %}
-{% block title %}{% trans "Login" %}{% endblock %}
-{% block content %}
-{% url 'auth_password_reset' as auth_pwd_reset_url %}
-{% url 'registration_register' as register_url%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie Lens</title>
+    </head>
 
-{% if form.errors %}
-<p>{% blocktrans %}Your username and password didn't match. Please try again.{% endblocktrans %}</p>
-{% endif %}
+    <body>
+        <h1>Login to Movie Lens</h1>
 
-<form method="post" action="{% url 'auth_login' %}">{% csrf_token %}
-<table>
-<tr>
-    <td>{% trans form.username.label_tag %}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{% trans form.password.label_tag %}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-<p>{% blocktrans %}<a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?
-    <a href="{{ register_url }}">Need an account</a>?{% endblocktrans %}</p>
+        <form id="login_form" method="post" action="/registration/login/">
+            {% csrf_token %}
+            Username: <input type="text" name="username" value="" size="50" />
+            <br />
+            Password: <input type="password" name="password" value="" size="50" />
+            <br />
 
-<input type="submit" value="{% trans "login" %}" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+            <input type="submit" value="submit" />
+        </form>
 
-{% endblock %}
+    </body>
+</html>

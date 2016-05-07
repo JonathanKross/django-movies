@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^movies/(?P<movie_id>\d+)$', views.show_movie, name='movie_detail'),
     url(r'^raters/(?P<rater_id>\d+)$', views.show_rater, name='rater_detail'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^login/$', views.user_login, name='login'),
 ]
