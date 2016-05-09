@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'lensview.apps.LensviewConfig',
     'django.contrib.admin',
     'django.contrib.auth',

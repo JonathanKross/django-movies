@@ -1,0 +1,5 @@
+{% if request.user.is_authenticated %}
+you are logged in as {{ request.user.username }}
+{% else %}
+you are not logged in, please <a href="{% url login %}">login</a>
+{% endif %}
