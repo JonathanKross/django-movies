@@ -12,7 +12,7 @@
 
     {% for rating in ratings %}
     <p>
-      <b>Stars:</b> &nbsp;&nbsp; {{ rating.stars }} &nbsp;&nbsp; for &nbsp;&nbsp; <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
+      <b>Stars:</b> &nbsp;&nbsp; {{ rating.stars }} &nbsp;&nbsp; for &nbsp;&nbsp; <a href="{% url 'lensview:movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
     </p>
   {% endfor %}
 {% endblock %}

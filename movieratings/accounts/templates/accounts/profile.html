@@ -1,5 +1,8 @@
 {% if request.user.is_authenticated %}
 you are logged in as {{ request.user.username }}
+<p>
+  <a href="/lensview/new/">Add New Rating</a><br>
+</p>
 {% else %}
 you are not logged in, please <a href="{% url login %}">login</a>
 {% endif %}
