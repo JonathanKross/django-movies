@@ -13,6 +13,7 @@ def create_rater_users(apps, schema_editor):
         email = 'rater' + str(rater.id) + '@raters.com'
         password = 'rater' + str(rater.id) + 'password'
         user = User.objects.create_user(username, email, password)
+        user.save()
 
 class Migration(migrations.Migration):
 
