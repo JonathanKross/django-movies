@@ -1,6 +1,16 @@
+{% extends "lensview/base.html" %}
+{% load i18n %}
 
 {% block content %}
   <h2><u>{{ movie.title }}</u></h2>
+  {% if request.user.is_authenticated %}
+    {% if user.rater.id not in rater_queries %}
+      You have not rated this movie yet<br>
+      <a href="/lensview/new/">Add New Rating</a><br>
+    {% else %}
+      You have already rated this movie
+    {% endif %}
+  {% endif %}
     <p>
       <b>Number of ratings:</b> &nbsp;&nbsp; {{ movie.number_ratings }}<br>
       <p></p>
@@ -13,5 +23,6 @@
     <p>
       <b>Stars:</b> &nbsp;&nbsp; {{ rating.stars }} &nbsp;&nbsp;&nbsp;&nbsp; <b>Rater:</b> &nbsp;&nbsp; <a href="{% url 'lensview:rater_detail' rating.rater.pk %}">#{{ rating.rater }}</a>
     </p>
-  {% endfor %}
-{% endblock %}
+
+    {% endfor %}
+{% endblock content%}

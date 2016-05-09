@@ -1,5 +1,9 @@
-<!DOCTYPE html>
+{% extends "lensview/base.html" %}
+{% load i18n %}
+
+
 <html>
+{% block content %}
     <head>
         <title>Movie Lens</title>
     </head>
@@ -19,4 +23,5 @@
         </form>
         <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
     </body>
+{% endblock content %}
 </html>

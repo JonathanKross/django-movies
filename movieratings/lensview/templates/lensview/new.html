@@ -1,3 +1,6 @@
+{% extends "lensview/base.html" %}
+{% load i18n %}
+{% block content %}
 <h2>Add a new rating</h2>
 User: {{ request.user.username }}
 <form action="" method="post">
@@ -6,3 +9,4 @@ User: {{ request.user.username }}
 
   <input type="submit" name="submit" value="Crete New Movie Rating">
 </form>
+{% endblock content %}

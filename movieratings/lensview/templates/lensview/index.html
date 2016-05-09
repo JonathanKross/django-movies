@@ -1,4 +1,11 @@
-<h1>Welcome to Movie Lens</h1>
-<a href="/login/">Login Here</a><br>
-<a href="/lensview/register/">Register Here</a><br>
-<a href="/lensview/top_movies">See Top 20 Movies</a>
+{% extends "lensview/base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>Welcome to Movie Lens</h1>
+  {% if request.user.is_anonymous %}
+    <a href="/login/">Login Here</a><br>
+    <a href="/lensview/register/">Register Here</a><br>
+  {% endif %}
+  <a href="/lensview/top_movies">See Top 20 Movies</a>
+{% endblock content %}

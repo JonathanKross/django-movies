@@ -1,3 +1,8 @@
+{% extends "lensview/base.html" %}
+{% load i18n %}
+
+
+{% block content %}
 {% if top_twenty %}
   <h1>20 Top Rated Movies</h1>
     <ol>
@@ -10,3 +15,4 @@
     {% else %}
       <p>No top movies to display</p>
 {% endif %}
+{% endblock content %}

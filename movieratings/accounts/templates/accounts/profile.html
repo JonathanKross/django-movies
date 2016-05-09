@@ -1,8 +1,32 @@
+{% extends "lensview/base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
 {% if request.user.is_authenticated %}
-you are logged in as {{ request.user.username }}
-<p>
-  <a href="/lensview/new/">Add New Rating</a><br>
-</p>
+
+<p></p>
+
+  <h3><u>Your user information</u></h3>
+    <b>Username:</b> {{request.user.username}}<br>
+    <b>Age:</b> {{ rater.get_age_display }}<br>
+    <b>Gender:</b> {{ rater.gender }}<br>
+    <b>Occupation:</b> {{ rater.get_occupation_display }}<br>
+
+    <p>You have rated <b>{{ ratings | length }}</b> movies.</p>
+
+    <h3><u>Your Movie Ratings</u></h3>
+
+    {% for rating in ratings %}
+    <p>
+      <b>Stars:</b> &nbsp;&nbsp; {{ rating.stars }} &nbsp;&nbsp; for &nbsp;&nbsp; <a href="{% url 'lensview:movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
+    </p>
+  {% endfor %}
+
 {% else %}
 you are not logged in, please <a href="{% url login %}">login</a>
+
 {% endif %}
+
+{% endblock content %}

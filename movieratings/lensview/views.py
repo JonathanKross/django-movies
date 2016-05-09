@@ -22,7 +22,9 @@ def top_movies(request):
 def show_movie(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
     ratings = movie.rating_set.all()
-    return render(request, 'lensview/movie.html', {'movie': movie, 'ratings': ratings})
+    rating_list = Rating.objects.filter(movie_id=movie.id)
+    rater_queries = rating_list.values_list('rater_id', flat=True)
+    return render(request, 'lensview/movie.html', {'movie': movie, 'ratings': ratings, 'rater_queries': rater_queries})
 
 
 def show_rater(request, rater_id):
@@ -53,7 +55,8 @@ def new(request):
         form = RatingForm(request.POST)
         if form.is_valid():
             rating = form.save(commit=False)
-            rating.user = request.user
+            rater = Rater.objects.get(user=request.user)
+            rating.rater = rater
             rating.save()
             return HttpResponseRedirect('/lensview/')
     else:
