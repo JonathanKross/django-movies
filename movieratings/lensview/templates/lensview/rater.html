@@ -1,14 +1,18 @@
 
 {% block content %}
-  <h2>Rater #{{ rater.id }}</h2>
+  <h2><u>Rater #{{ rater.id }}</u></h2>
   <p>
-    Age: {{ rater.get_age_display }}<br>
-    Gender: {{ rater.gender }}<br>
-    Occupation: {{ rater.get_occupation_display }}<br>
+    <b>Age:</b> {{ rater.get_age_display }}<br>
+    <b>Gender:</b> {{ rater.gender }}<br>
+    <b>Occupation:</b> {{ rater.get_occupation_display }}<br>
   </p>
+    This rater has rated <b>{{ ratings | length }}</b> movies.
+
+    <h3><u>Movie Ratings</u></h3>
+
     {% for rating in ratings %}
     <p>
-      Stars: {{ rating.stars }}, <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
+      <b>Stars:</b> &nbsp;&nbsp; {{ rating.stars }} &nbsp;&nbsp;&nbsp;&nbsp; <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
     </p>
   {% endfor %}
 {% endblock %}

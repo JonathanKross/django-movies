@@ -1,13 +1,17 @@
 
 {% block content %}
-  <h2>{{ movie.title }}</h2>
+  <h2><u>{{ movie.title }}</u></h2>
     <p>
-      Number of ratings: {{ movie.number_ratings }}<br>
-      Average rating: {{ movie.average_rating | floatformat:"2" }}
+      <b>Number of ratings:</b> &nbsp;&nbsp; {{ movie.number_ratings }}<br>
+      <p></p>
+      <b>Average rating:</b> &nbsp;&nbsp; {{ movie.average_rating | floatformat:"2" }}
     </p>
+
+    <h3><u>Ratings</u></h3>
+
     {% for rating in ratings %}
     <p>
-      Stars: {{ rating.stars }}, Rater: <a href="{% url 'rater_detail' rating.rater.pk %}">#{{ rating.rater }}</a>
+      <b>Stars:</b> &nbsp;&nbsp; {{ rating.stars }} &nbsp;&nbsp;&nbsp;&nbsp; <b>Rater:</b> &nbsp;&nbsp; <a href="{% url 'rater_detail' rating.rater.pk %}">#{{ rating.rater }}</a>
     </p>
   {% endfor %}
 {% endblock %}
