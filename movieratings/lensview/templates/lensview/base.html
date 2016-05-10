@@ -3,17 +3,20 @@
 <html lang="en">
 ​
 
-{% block title %}{{ title }}
-<a href="{% url 'login' %}">Login</a> &nbsp;&nbsp; | &nbsp;&nbsp;
-<a href="{% url 'logout' %}">Logout</a> &nbsp;&nbsp; | &nbsp;&nbsp;
-<a href="{% url 'lensview:index' %}">Home</a> &nbsp;&nbsp; | &nbsp;&nbsp;
-{{ site_title|default:_('Movie Lens') }}
+{% block title %}{{ title }} {{ site_title|default:_("Movie Lens") }}
+
+{% if request.user.is_anonymous %}
+&nbsp;&nbsp; | &nbsp;&nbsp; <a href="{% url 'login' %}">Login</a>
+{% endif %}
+&nbsp;&nbsp; | &nbsp;&nbsp; <a href="{% url 'lensview:index' %}">Home</a>
+
 {% if request.user.is_authenticated %}
-&nbsp;&nbsp; | &nbsp;&nbsp;  logged in as: <b>{{request.user.username}}</b>
+&nbsp;&nbsp; | &nbsp;&nbsp;  user: <b>{{request.user.username}}</b>
 &nbsp;&nbsp; | &nbsp;&nbsp;  <a href="/lensview/new/">Add New Rating</a>
 &nbsp;&nbsp; | &nbsp;&nbsp;  <a href="/accounts/profile/">Profile</a>
+&nbsp;&nbsp; | &nbsp;&nbsp;  <a href="{% url 'logout' %}">Logout</a>
 {% else %}
-  Not logged in.
+&nbsp;&nbsp; | &nbsp;&nbsp;  Not logged in.
 {% endif %}
 {% endblock %}
 {% block branding %}
@@ -23,7 +26,7 @@
 
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
-        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block content_title %}{% if title %}<h2>You have logged out</h2>{% endif %}{% endblock %}
         {% block content %}
         {% block object-tools %}{% endblock %}
         {{ content }}
