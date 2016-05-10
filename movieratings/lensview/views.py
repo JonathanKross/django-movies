@@ -20,13 +20,13 @@ def top_movies(request):
 
 
 def show_movie(request, movie_id):
-    movie = Movie.objects.get(pk=movie_id)
+    movie = get_object_or_404(Movie, pk=movie_id)
     ratings = movie.rating_set.all()
     return render(request, 'lensview/movie.html', {'movie': movie, 'ratings': ratings})
 
 
 def show_rater(request, rater_id):
-    rater = Rater.objects.get(pk=rater_id)
+    rater = get_object_or_404(Rater, pk=rater_id)
     ratings = rater.rating_set.all()
     return render(request, 'lensview/rater.html', {'rater': rater, 'ratings': ratings})
 
