@@ -8,7 +8,7 @@
   </p>
     {% for rating in ratings %}
     <p>
-      Stars: {{ rating.stars }}, <a href="{% url 'movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
+      Stars: {{ rating.stars }}, <a href="{% url 'lensview:movie_detail' rating.movie.pk %}">{{ rating.movie }}</a>
     </p>
   {% endfor %}
 {% endblock %}
