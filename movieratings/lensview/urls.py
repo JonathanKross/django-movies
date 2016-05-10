@@ -1,7 +1,10 @@
 from django.conf.urls import url
-
 from . import views
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> jonathan
 app_name = 'lensview'
 
 urlpatterns = [
