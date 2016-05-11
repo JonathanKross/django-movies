@@ -1,5 +1,9 @@
+{% extends "lensview/base.html" %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html>
+{% block content %}
     <head>
         <title>Movie Lens</title>
     </head>
@@ -24,4 +28,5 @@
         </form>
         {% endif %}
     </body>
+{% endblock content %}
 </html>
