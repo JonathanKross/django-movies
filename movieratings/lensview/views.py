@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Movie, Rater, Rating
 from .forms import UserForm, RatingForm
+from django.views.generic.detail import DetailView
 
 
 def index(request):
@@ -27,10 +28,20 @@ def show_movie(request, movie_id):
     return render(request, 'lensview/movie.html', {'movie': movie, 'ratings': ratings, 'rater_queries': rater_queries})
 
 
-def show_rater(request, rater_id):
-    rater = get_object_or_404(Rater, pk=rater_id)
-    ratings = rater.rating_set.all()
-    return render(request, 'lensview/rater.html', {'rater': rater, 'ratings': ratings})
+# def show_rater(request, rater_id):
+#     rater = get_object_or_404(Rater, pk=rater_id)
+#     ratings = rater.rating_set.all()
+#     return render(request, 'lensview/rater.html', {'rater': rater, 'ratings': ratings})
+
+
+class RaterDetailView(DetailView):
+    model = Rater
+
+    def get_context_data(self, **kwargs):
+        context = super(RaterDetailView, self).get_context_data(**kwargs)
+        context['ratings'] = self.object.rating_set.all()
+        return context
+
 
 def register(request):
     registered = False
